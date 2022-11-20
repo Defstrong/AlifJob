@@ -43,7 +43,7 @@ namespace WebApplication4.Controllers
                 InstallmentPercentage = (Sum * InstallmentPercentage) / 100;
             }
             //Возврощаем Eror 404 если товар не найден
-            else return "Eror 404. Produkt it's not found";
+            else return "Eror 404. Product not found";
 
             //Передаём значения в SendMassege для отправки СМС и возврощаем результат
             return SendMassage(Product, InstallmentPercentage + Sum, Installment);
