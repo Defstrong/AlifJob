@@ -1,4 +1,3 @@
-using arst;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
 
@@ -6,31 +5,31 @@ namespace WebApplication4.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class KreditController : ControllerBase
+    public class InstallmentController : ControllerBase
     {
 
-        [HttpGet(Name = "Kredit")]
+        [HttpGet(Name = "Installment")]
 
-            public string Get(string TipProduct, int Sum, string PhoneNumbers, int Installment)
+            public string GetInstallment(string TipProduct, int Sum, string PhoneNumbers, int Installment)
             {
                 int InstallmentPercentage = 0;
-                string Product = "Eror";
+                string Product = "";
                 if (TipProduct == "Phone")
                 {
                     Product = "Phone";
-                    InstallmentPercentage = ForInstallment(9, Installment) * 3;
+                    InstallmentPercentage = GetInstallment(9, Installment) * 3;
                     InstallmentPercentage = (Sum * InstallmentPercentage) / 100;
                 }
                 else if (TipProduct == "Komputer")
                 {
                     Product = "Komputer";
-                    InstallmentPercentage = ForInstallment(12, Installment) * 4;
+                    InstallmentPercentage = GetInstallment(12, Installment) * 4;
                     InstallmentPercentage = (Sum * InstallmentPercentage) / 100;
                 }
                 else if (TipProduct == "TV")
                 {
                     Product = "TV";
-                    InstallmentPercentage = ForInstallment(18, Installment) * 5;
+                    InstallmentPercentage = GetInstallment(18, Installment) * 5;
                     InstallmentPercentage = (Sum * InstallmentPercentage) / 100;
                 }
                 else return "Eror 404. Produkt it's not found";
@@ -38,21 +37,21 @@ namespace WebApplication4.Controllers
                 return SendMassage(Product, InstallmentPercentage+Sum, Installment);
 
 
-                int ForInstallment(int RangeStart, int RangeEnd)
+                int GetInstallment(int RangeStart, int RangeEnd) 
                 {
                     int Procent = 0;
-                    List<int> Ranges = new List<int>(6) { 3, 6, 9, 12, 18, 24 };
-                    for (int i = 0; i < Ranges.Count; i++)
+                    List<int> RangeInstallment = new List<int>(6) { 3, 6, 9, 12, 18, 24 };
+                    for (int i = 0; i < RangeInstallment.Count; i++)
                     {
-                        if (Ranges[i] > RangeStart)
+                        if (RangeInstallment[i] > RangeStart)
                             Procent++;
-                        if (Ranges[i] == RangeEnd) break;
+                        if (RangeInstallment[i] == RangeEnd) break;
                     }
                     return Procent;
                 }
                 string SendMassage(string TipProduct, int Sum, int Installment)
                 {
-                    return $"Your product: {Product}\nInstallment duration: {Installment}\nTotal amount: {Sum} smn\n";
+                    return $"Your product: {Product}\nInstallment duration: {Installment} months\nTotal amount: {Sum} smn\n";
                 }
             }
     }
